@@ -1,0 +1,97 @@
+<template id="messagerender">
+    <style>
+        .messageWrap {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            box-shadow: 5px 5px 50px;
+            border-radius: 1em;
+        }
+
+        .message-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+            overflow-y: scroll;
+
+
+
+        }
+
+        .messages {
+
+
+            list-style: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .msg-form {
+            /* background-color: rgb(214, 214, 214); */
+            display: flex;
+            padding: 10px;
+            /* height: 5%; */
+            /* box-shadow: -2px -2px 5px rgb(61, 61, 61); */
+        }
+
+        .msg-button {
+            border: none;
+            background: none;
+            /* box-shadow: 2px 2px 5px rgb(61, 61, 61); */
+            box-shadow: 2px 2px 5px;
+        }
+
+        .msg-button:hover {
+            box-shadow: 4px 4px 10px;
+
+        }
+
+
+        .msg-input {
+            justify-content: flex-end;
+            width: 98%;
+            height: 2em;
+            border: none;
+            background: none;
+            box-shadow: inset 2px 2px 5px;
+        }
+
+        /* ===== Scrollbar CSS ===== */
+        /* Firefox */
+        * {
+            scrollbar-width: auto;
+            scrollbar-color: #8f54a0 #ffffff;
+        }
+
+        /* Chrome, Edge, and Safari */
+        *::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #8f54a0;
+            border-radius: 10px;
+            border: 3px solid #ffffff;
+        }
+
+        
+    </style>
+    <div class="messageWrap">
+        <div class="message-box">
+            <ul class="messages">
+            </ul>
+        </div>
+        <form class="msg-form" action>
+            <input class="msg-input" autocomplete="off">
+            <button class="msg-button">Send</button>
+        </form>
+    </div>
+</template>

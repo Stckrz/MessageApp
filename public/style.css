@@ -1,0 +1,69 @@
+body {
+    background-color: purple;
+    color: black;
+    font-family: 'Kanit', sans-serif;
+    display: flex;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+.biggestWrapperAlive{
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    aspect-ratio: 16/9;
+    background: linear-gradient(blue, purple);
+}
+.main {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    height: 90%;
+    width: 90%;
+    background: linear-gradient(blue, purple);
+    
+    
+}
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    width: 20%;
+
+}
+.chat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 80%;
+    aspect-ratio: 16/9;
+    border-radius: 1em;
+    box-shadow: 5px 5px 5px;
+}
+.wrapper {
+    height: 100%;
+    width: 80%;
+    border-radius: 1em;
+    box-shadow: 5px 5px 50px;
+}
+.user-list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+    width: 20%;
+
+
+}
+
+
