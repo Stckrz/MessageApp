@@ -84,6 +84,7 @@ io.on('connection', (socket) => {
 
         const messageDestination = User.FindSocketIdByUser(destination)?.socketid ?? "room";
         const messageSender = User.FindUserBySocketId(userID).name;
+        console.log(destination)
 
         if (messageDestination === 'room') {
             mainChatRoom.sendMessage(`${messageSender}: ${msg}`);
@@ -96,13 +97,14 @@ io.on('connection', (socket) => {
                 a.sendMessage(`${messageSender}: ${msg}`);
 
                 socket.broadcast.to(messageDestination).emit('update chat log', a.RoomChatLog(), messageSender);
-                socket.emit('update chat log', a.RoomChatLog())
+                socket.emit('update chat log', a.RoomChatLog(), destination)
 
             } else {
                 let a = chatCheck;
+                console.log(a);
                 a.sendMessage(`${messageSender}:${msg}`)
                 // socket.broadcast.to(messageDestination).emit('update chat log', (a.RoomChatLog()));
-                socket.emit('update chat log', a.RoomChatLog())
+                socket.emit('update chat log', a.RoomChatLog(), destination)
             }
 
         }
@@ -112,10 +114,10 @@ io.on('connection', (socket) => {
     socket.on('select chat recipient', (recipient) => {
         console.log(`you selected ${recipient}`)
         if (recipient === "room") {
-            socket.emit('update chat log', mainChatRoom.RoomChatLog());
+            socket.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
         } else {
             let privateChat = FindChat(userID, User.FindSocketIdByUser(recipient).socketid)
-            socket.emit('update chat log', privateChat.RoomChatLog());
+            socket.emit('update chat log', privateChat.RoomChatLog(), recipient);
         }
     })
 
@@ -123,7 +125,7 @@ io.on('connection', (socket) => {
     socket.on('username', (username) => {
         const newUser = new User(username, socket.id);
         mainChatRoom.sendMessage(`${newUser.name} has endered the chat`);
-        socket.emit('update chat log', mainChatRoom.RoomChatLog());
+        socket.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
 
     });
 
