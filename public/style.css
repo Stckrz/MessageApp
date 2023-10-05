@@ -40,15 +40,27 @@ body {
     width: 20%;
 
 }
-.chat{
+
+.chat {
+
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
-    width: 80%;
+    width: 80px;
     aspect-ratio: 16/9;
     border-radius: 1em;
+    border: 1px solid;
     box-shadow: 5px 5px 5px;
+    background: linear-gradient(blue, #0000);
+    background-color: blue;
+    transition: background-color 0.5s, box-shadow 0.5s;
+
+
+}
+.chat:hover{
+    background-color: purple;
+    box-shadow: 8px 8px 8px
 }
 .wrapper {
     height: 100%;
@@ -66,4 +78,30 @@ body {
 
 }
 
+
+.show {
+    animation-name: colorpulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes colorpulse {
+    0% {
+        background-color: white;
+    }
+    
+    50% {
+        background-color: red;
+    }
+    
+    100% {
+        background-color: white;
+    }
+}
+
+.close-button{
+    height: 50%;
+    
+}
 

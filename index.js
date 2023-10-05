@@ -88,22 +88,22 @@ io.on('connection', (socket) => {
 
         if (messageDestination === 'room') {
             mainChatRoom.sendMessage(`${messageSender}: ${msg}`);
-            socket.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
+            io.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
 
         } else {
             let chatCheck = FindChat(userID, User.FindSocketIdByUser(destination).socketid);
             if (!chatCheck) {
                 let a = new ChatRoom([userID, User.FindSocketIdByUser(destination).socketid], msg)
                 a.sendMessage(`${messageSender}: ${msg}`);
-
+                console.log(a.RoomChatLog())
                 socket.broadcast.to(messageDestination).emit('update chat log', a.RoomChatLog(), messageSender);
-                socket.emit('update chat log', a.RoomChatLog(), destination)
+                // socket.emit('update chat log', a.RoomChatLog(), destination)
 
             } else {
                 let a = chatCheck;
                 console.log(a);
-                a.sendMessage(`${messageSender}:${msg}`)
-                // socket.broadcast.to(messageDestination).emit('update chat log', (a.RoomChatLog()));
+                a.sendMessage(`${messageSender}: ${msg}`)
+                io.to(messageDestination).emit('update chat log', (a.RoomChatLog()), messageSender);
                 socket.emit('update chat log', a.RoomChatLog(), destination)
             }
 
@@ -125,7 +125,7 @@ io.on('connection', (socket) => {
     socket.on('username', (username) => {
         const newUser = new User(username, socket.id);
         mainChatRoom.sendMessage(`${newUser.name} has endered the chat`);
-        socket.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
+        io.emit('update chat log', mainChatRoom.RoomChatLog(), "room");
 
     });
 
