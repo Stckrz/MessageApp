@@ -23,7 +23,6 @@ function ChatlistAdd(user){
 
 function removeChat(user){
     let chat = document.querySelector('.${user}-chat')
-
 }
 
 
@@ -78,23 +77,16 @@ usernameButton.addEventListener('click', (e) => {
     }
 });
 
-
-
-
 //when recieving the 'update chat log' emit from server, deletes all items from the chat log and recreates them, one for each
 //item in msgs, which is an array of user: message pairs.
 socket.on('update chat log', (msgs, sender) => {
-
-
-
 
         if (!openChats.includes(sender)) {
             openChats.push(sender);
             const newRoom = ChatlistAdd(sender)
             chatlist.appendChild(newRoom);
             roomElementList.push(newRoom);
-            
-            
+                        
             newRoom.addEventListener('click', () => {
                 socket.emit('select chat recipient', sender);
                 SelectedUser = sender;
@@ -105,19 +97,16 @@ socket.on('update chat log', (msgs, sender) => {
         }
         
         if (sender === SelectedUser) {
-            console.log(`${sender}, ${SelectedUser}`)
             emptyParentElement(wrapper);
             const messageWrap = new MessageWrap(msgs, SelectedUser);
             wrapper.appendChild(messageWrap);
             messageWrap.onMessageSend((message) => {
                 if (message) {
-                    socket.emit('chat message', message, SelectedUser);
-                    
+                    socket.emit('chat message', message, SelectedUser);                    
                 }
             })
 
         window.scrollTo(0, document.body.scrollHeight);
-        // }
     }else{
         let a = document.querySelector(`.${sender}-chat`);
         a.classList.add("show")
@@ -147,7 +136,6 @@ socket.on('update user list', (userarr) => {
                     SelectedUser = userArray[i];
                     if (!openChats.includes(userArray[i])) {
                         openChats.push(userArray[i]);
-                        // const roomlist = new ChatList(userArray[i]);
                         const roomlist = ChatlistAdd(userArray[i]);
                         chatlist.appendChild(roomlist);
                         socket.emit('chat message', `${userArray[i]} and ${currentUser}'s lovely little chat`, userArray[i])
@@ -158,11 +146,9 @@ socket.on('update user list', (userarr) => {
                         
                         
                         roomlist.addEventListener('click',() => {
-                            // socket.emit('chat message', `new private message with ${userArray[i]}`, userArray[i])
                             SelectedUser = userArray[i];
                             console.log(`${SelectedUser} selected`)
                             socket.emit('select chat recipient', userArray[i])
-                            
                             roomlist.classList.remove("show")
 
                         });
