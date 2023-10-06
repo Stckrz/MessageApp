@@ -94,6 +94,7 @@ io.on('connection', (socket) => {
             let chatCheck = FindChat(userID, User.FindSocketIdByUser(destination).socketid);
             if (!chatCheck) {
                 let a = new ChatRoom([userID, User.FindSocketIdByUser(destination).socketid], msg)
+                a.sendMessage("new private chat");
                 a.sendMessage(`${messageSender}: ${msg}`);
                 console.log(a.RoomChatLog())
                 socket.broadcast.to(messageDestination).emit('update chat log', a.RoomChatLog(), messageSender);

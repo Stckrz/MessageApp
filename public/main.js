@@ -9,14 +9,17 @@ function ChatlistAdd(user){
     const a = document.querySelector('.chat');
     newDm.classList.add(`${user}-chat`);
     newDm.textContent = `${user}`;
-    // const closeButton = document.createElement('button');
-    // closeButton.textContent = 'x'
-    // closeButton.classList.add("close-button");
-    // newDm.appendChild(closeButton);
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'x'
+    closeButton.classList.add("close-button");
+    newDm.appendChild(closeButton);
 
-    // closeButton.addEventListener('click', () => {
-    //     newDm.remove();
-    // });
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        newDm.remove();
+        openChats.splice(openChats.indexOf(user), 1);
+        console.log(openChats);
+    });
     
     return(newDm);
 }
@@ -138,7 +141,7 @@ socket.on('update user list', (userarr) => {
                         openChats.push(userArray[i]);
                         const roomlist = ChatlistAdd(userArray[i]);
                         chatlist.appendChild(roomlist);
-                        socket.emit('chat message', `${userArray[i]} and ${currentUser}'s lovely little chat`, userArray[i])
+                        socket.emit('chat message', ``, userArray[i])
                         socket.emit('select chat recipient', userArray[i])
                         SelectedUser = userArray[i];
                         console.log(`${SelectedUser} selected`)
