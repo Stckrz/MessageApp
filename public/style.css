@@ -105,3 +105,16 @@ body {
     
 }
 
+.close-button {
+    border: 1px solid;
+    background: none;
+    box-shadow: 2px 2px 2px;
+    background: linear-gradient(blue, #0000);
+    background-color: blue;
+    transition: background-color 0.5s, box-shadow 0.5s;
+}
+
+.close-button:hover {
+    background-color: purple;
+    box-shadow:4px 4px 4px;
+}
