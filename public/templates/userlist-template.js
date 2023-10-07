@@ -38,6 +38,11 @@ export class UserList extends HTMLElement {
         dmButton.addEventListener('click', handler)
 
     }
+    addBlockButtonClickHandler(handler){
+        const blockButton = this.shadowRoot.querySelector(".block-user")
+        blockButton.addEventListener('click', handler)
+
+    }
         
 }
 customElements.define('userlist-module', UserList);

@@ -1,9 +1,8 @@
 import { UserList } from "./templates/userlist-template.js";
 import { MessageWrap } from "./templates/messagewrap-template.js";
-import { ChatList } from "./templates/chatlist-template.js";
 
 
-function ChatlistAdd(user){
+function ChatlistAdd(user) {
     const newDm = document.createElement("div");
     newDm.classList.add("chat");
     const a = document.querySelector('.chat');
@@ -18,14 +17,10 @@ function ChatlistAdd(user){
         e.stopPropagation();
         newDm.remove();
         openChats.splice(openChats.indexOf(user), 1);
-        console.log(openChats);
+        // console.log(openChats);
     });
-    
-    return(newDm);
-}
 
-function removeChat(user){
-    let chat = document.querySelector('.${user}-chat')
+    return (newDm);
 }
 
 
@@ -83,82 +78,97 @@ usernameButton.addEventListener('click', (e) => {
 //when recieving the 'update chat log' emit from server, deletes all items from the chat log and recreates them, one for each
 //item in msgs, which is an array of user: message pairs.
 socket.on('update chat log', (msgs, sender) => {
+    console.log(blockedUsers);
 
-        if (!openChats.includes(sender)) {
-            openChats.push(sender);
-            const newRoom = ChatlistAdd(sender)
-            chatlist.appendChild(newRoom);
-            roomElementList.push(newRoom);
-                        
-            newRoom.addEventListener('click', () => {
-                socket.emit('select chat recipient', sender);
-                SelectedUser = sender;
-                console.log(`${SelectedUser} selected`)
-                
-                newRoom.classList.remove("show")
-            });
-        }
-        
-        if (sender === SelectedUser) {
-            emptyParentElement(wrapper);
-            const messageWrap = new MessageWrap(msgs, SelectedUser);
-            wrapper.appendChild(messageWrap);
-            messageWrap.onMessageSend((message) => {
-                if (message) {
-                    socket.emit('chat message', message, SelectedUser);                    
-                }
-            })
+    if (!openChats.includes(sender)) {
+        openChats.push(sender);
+        const newRoom = ChatlistAdd(sender)
+        chatlist.appendChild(newRoom);
+        roomElementList.push(newRoom);
+
+        newRoom.addEventListener('click', () => {
+            socket.emit('select chat recipient', sender);
+            SelectedUser = sender;
+            console.log(`${SelectedUser} selected`)
+
+            newRoom.classList.remove("show")
+        });
+    }
+
+    if (sender === SelectedUser) {
+        emptyParentElement(wrapper);
+        const messageWrap = new MessageWrap(msgs, SelectedUser, blockedUsers);
+        wrapper.appendChild(messageWrap);
+        messageWrap.onMessageSend((message) => {
+            if (message) {
+                socket.emit('chat message', message, SelectedUser);
+            }
+        })
 
         window.scrollTo(0, document.body.scrollHeight);
-    }else{
+    } else {
         let a = document.querySelector(`.${sender}-chat`);
         a.classList.add("show")
-        
+
     }
 });
+
+socket.on('block user', (blockedBy) => {
+    console.log('a person blocked you');
+    blockedUsers.push(blockedBy);
+    socket.emit('update user list');
+})
 
 //Renders the user list when 'update user list' is emitted from server, using the array that is passed.
 socket.on('update user list', (userarr) => {
     let userArray = JSON.parse(userarr);
     emptyParentElement(userList);
-    
+
     for (let i = 0; i < userArray.length; i++) {
         //instantiates a new UserList for each item in the userArray, appends it to the userListItem, and hooks up the 
         //buttonclickhandler to the button.
         if (userArray[i] != currentUser) {
-            const userListItem = new UserList(userArray[i])
-            userList.appendChild(userListItem);
-            
-            userListItem.addDmButtonClickHandler(() => {
-                if (openChats.includes(userArray[i])) {
-                    SelectedUser = userArray[i];
-                    console.log(`${SelectedUser} selected`)
-                    socket.emit('select chat recipient', userArray[i])
-                } else {
-                    
-                    SelectedUser = userArray[i];
-                    if (!openChats.includes(userArray[i])) {
-                        openChats.push(userArray[i]);
-                        const roomlist = ChatlistAdd(userArray[i]);
-                        chatlist.appendChild(roomlist);
-                        socket.emit('chat message', ``, userArray[i])
-                        socket.emit('select chat recipient', userArray[i])
+            if (!blockedUsers.includes(userArray[i])) {
+                const userListItem = new UserList(userArray[i])
+                userList.appendChild(userListItem);
+
+                userListItem.addBlockButtonClickHandler(() => {
+                    blockedUsers.push(userArray[i]);
+                    socket.emit('update user list');
+                    socket.emit('block user', userArray[i])
+                })
+
+                userListItem.addDmButtonClickHandler(() => {
+                    if (openChats.includes(userArray[i])) {
                         SelectedUser = userArray[i];
                         console.log(`${SelectedUser} selected`)
-                        
-                        
-                        
-                        roomlist.addEventListener('click',() => {
+                        socket.emit('select chat recipient', userArray[i])
+                    } else {
+
+                        SelectedUser = userArray[i];
+                        if (!openChats.includes(userArray[i])) {
+                            openChats.push(userArray[i]);
+                            const roomlist = ChatlistAdd(userArray[i]);
+                            chatlist.appendChild(roomlist);
+                            socket.emit('chat message', ``, userArray[i])
+                            socket.emit('select chat recipient', userArray[i])
                             SelectedUser = userArray[i];
                             console.log(`${SelectedUser} selected`)
-                            socket.emit('select chat recipient', userArray[i])
-                            roomlist.classList.remove("show")
 
-                        });
+
+
+                            roomlist.addEventListener('click', () => {
+                                SelectedUser = userArray[i];
+                                console.log(`${SelectedUser} selected`)
+                                socket.emit('select chat recipient', userArray[i])
+                                roomlist.classList.remove("show")
+
+                            });
+                        }
+
                     }
-
-                }
-            })
+                })
+            }
         }
     }
 })

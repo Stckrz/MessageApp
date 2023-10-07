@@ -120,7 +120,7 @@ io.on('connection', (socket) => {
             let privateChat = FindChat(userID, User.FindSocketIdByUser(recipient).socketid)
             socket.emit('update chat log', privateChat.RoomChatLog(), recipient);
         }
-    })
+    });
 
 
     socket.on('username', (username) => {
@@ -130,10 +130,22 @@ io.on('connection', (socket) => {
 
     });
 
+    
     socket.on('update user list', (username) => {
-        namearray.push(username);
-        io.emit('update user list', JSON.stringify(namearray))
+        if (typeof (username) === "undefined") {
+            io.emit('update user list', JSON.stringify(namearray))
+        } else {
+            namearray.push(username)
+            io.emit('update user list', JSON.stringify(namearray))
+        }
     });
+    
+    socket.on('block user', (blockedUserName) => {
+        let blockSocket = User.FindSocketIdByUser(blockedUserName).socketid;
+        let clientSender = User.FindUserBySocketId(userID).name;
+    socket.broadcast.to(blockSocket).emit('block user', clientSender);
+    });
+
 
 });
 
