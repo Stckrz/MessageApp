@@ -1,11 +1,9 @@
 import { UserList } from "./templates/userlist-template.js";
 import { MessageWrap } from "./templates/messagewrap-template.js";
 
-
 function ChatlistAdd(user) {
     const newDm = document.createElement("div");
     newDm.classList.add("chat");
-    const a = document.querySelector('.chat');
     newDm.classList.add(`${user}-chat`);
     newDm.textContent = `${user}`;
     const closeButton = document.createElement('button');
@@ -17,7 +15,6 @@ function ChatlistAdd(user) {
         e.stopPropagation();
         newDm.remove();
         openChats.splice(openChats.indexOf(user), 1);
-        // console.log(openChats);
     });
 
     return (newDm);
@@ -29,7 +26,6 @@ function emptyParentElement(parentClass) {
         parentClass.firstChild.remove()
     }
 }
-
 
 const socket = io();
 
@@ -78,8 +74,6 @@ usernameButton.addEventListener('click', (e) => {
 //when recieving the 'update chat log' emit from server, deletes all items from the chat log and recreates them, one for each
 //item in msgs, which is an array of user: message pairs.
 socket.on('update chat log', (msgs, sender) => {
-    console.log(blockedUsers);
-
     if (!openChats.includes(sender)) {
         openChats.push(sender);
         const newRoom = ChatlistAdd(sender)
@@ -114,7 +108,6 @@ socket.on('update chat log', (msgs, sender) => {
 });
 
 socket.on('block user', (blockedBy) => {
-    console.log('a person blocked you');
     blockedUsers.push(blockedBy);
     socket.emit('update user list');
 })
@@ -155,22 +148,16 @@ socket.on('update user list', (userarr) => {
                             SelectedUser = userArray[i];
                             console.log(`${SelectedUser} selected`)
 
-
-
                             roomlist.addEventListener('click', () => {
                                 SelectedUser = userArray[i];
                                 console.log(`${SelectedUser} selected`)
                                 socket.emit('select chat recipient', userArray[i])
                                 roomlist.classList.remove("show")
-
                             });
                         }
-
                     }
                 })
             }
         }
     }
 })
-
-
