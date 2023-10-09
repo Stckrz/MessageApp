@@ -1,85 +1,32 @@
 body {
     background-color: black;
-    /* color: black;
-    font-family: 'Kanit', sans-serif;
-    font-weight: bold;
-    display: flex;
-    font-size: 20px;
+    margin: 0;
     padding: 0;
-    margin: 0; */
 }
 .biggestWrapperAlive{
+    position: relative;
     display: flex;
-    flex-direction: row;
-    background-color: black;
     justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    width: 100vw;
-    aspect-ratio: 16/9;
+    align-items: center;
 }
-.main {
+
+.wrapper{
+    border: 1px solid;
+    border-radius: 5px;
+}
+.startWrapper{
     position: absolute;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 20px;
-    height: 80%;
-    width: 90%;
-
-    
-    
-}
-.wrapper{
-    width: 50%;
-    height: 100vh;
-}
-
-/* .chat-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
-    width: 20%;
-
-} */
-
-/* .chat {
-
-    display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 80px;
-    aspect-ratio: 16/9;
-    border-radius: 1em;
-    border: 1px solid;
-
-    transition: background-color 0.5s, box-shadow 0.5s;
-
-
-} */
-.chat:hover{
-    background-color: purple;
-    box-shadow: 8px 8px 8px
 }
-/* .wrapper {
-    height: 100%;
-    width: 80%;
-    border-radius: 1em;
-    box-shadow: 1px 1px 5px;
-} */
+
+.username-button{
+    margin-bottom: 5px;
+}
 .user-list{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    height: 100%;
-    width: 20%;
-
-
+    height: 50em;
+    border: 1px solid;;
 }
-
 
 .show {
     animation-name: colorpulse;
@@ -92,37 +39,21 @@ body {
     0% {
         background-color: white;
     }
-    
     50% {
-        background-color: red;
+        background-color: black;
     }
-    
     100% {
         background-color: white;
     }
 }
-
-.close-button{
-    height: 50%;
-    
+.user-list-item-cont {
+    display: none;
+    display: flex !important;
+    align-items: center;
+    list-style: none; 
+    justify-content: space-between !important;
+    border: 1px solid black;
+    border-bottom: 1px solid;
+    background-color: black;
+    margin: 0;
 }
-
-.close-button {
-    border: 1px solid;
-    background: none;
-    box-shadow: 2px 2px 2px;
-    /* background: linear-gradient(blue, #0000); */
-    /* background-color: blue; */
-    transition: background-color 0.5s, box-shadow 0.5s;
-}
-
-.close-button:hover {
-    background-color: purple;
-    box-shadow:4px 4px 4px;
-}
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-

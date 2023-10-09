@@ -25,13 +25,14 @@ function ChatlistAdd(user) {
 }
 
 
+
 function emptyParentElement(parentClass) {
     while (parentClass.firstChild) {
         parentClass.firstChild.remove()
     }
 }
 
-function setChatTabToActive(user){
+function setChatTabToActive(user) {
     let currentActive = document.querySelector('.active');
     let newActive = document.querySelector(`.${user}-chat`)
     currentActive.classList.remove("active");
@@ -47,6 +48,7 @@ const usernameInput = document.querySelector('.username-input');
 const usernameButton = document.querySelector('.username-button');
 const userList = document.querySelector('.user-list');
 const chatlist = document.querySelector('.chat-list');
+const messageDiv = document.querySelector('.messageWrapdiv');
 
 
 let SelectedUser = "room";
@@ -63,6 +65,7 @@ main.style.visibility = 'hidden';
 usernameButton.addEventListener('click', (e) => {
     e.preventDefault();
 
+
     if (usernameInput.value) {
         const username = usernameInput.value;
         currentUser = username;
@@ -75,7 +78,7 @@ usernameButton.addEventListener('click', (e) => {
         chatlist.appendChild(mainroom);
         openChats.push(username);
         mainroom.firstChild.classList.add("active")
-    
+
         mainroom.addEventListener('click', () => {
             SelectedUser = 'room';
             console.log(`${SelectedUser} selected`)
@@ -138,10 +141,13 @@ socket.on('update user list', (userarr) => {
     for (let i = 0; i < userArray.length; i++) {
         //instantiates a new UserList for each item in the userArray, appends it to the userListItem, and hooks up the 
         //buttonclickhandler to the button.
-        if (userArray[i] != currentUser) {
+
+        if (userArray[i] != currentUser){
+        console.log("balls")
             if (!blockedUsers.includes(userArray[i])) {
-                const userListItem = new UserList(userArray[i])
+                const userListItem = new UserList(userArray[i], currentUser)
                 userList.appendChild(userListItem);
+
 
                 userListItem.addBlockButtonClickHandler(() => {
                     blockedUsers.push(userArray[i]);
@@ -179,6 +185,7 @@ socket.on('update user list', (userarr) => {
                     }
                 })
             }
-        }
     }
+
+}
 })

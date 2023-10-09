@@ -1,85 +1,36 @@
-
 <template id="messagerender">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <style>
-        .messageWrap {
-            /* display: flex;
-            flex-direction: column;
-            justify-content: space-between; */
-            /* height: 100%;*/
-            width: 1000px; 
-            height: 100%;
-            /* border-radius: 1em; */
+        .messageWrapdiv {
+            height: 47em;
+            display: flex;
+            flex-direction: column-reverse;
+            overflow-y: auto;
         }
-
-        .message-box {
-            /* display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 20px;
-            overflow-y: scroll; */
-            height: 80vh;
-
-
-
-        }
-        
 
         .messages {
             list-style: none;
         }
 
-        li {
-            list-style: none;
-        }
-
-        .msg-form {
+        .form-box {
             display: flex;
-            padding: 10px;
-            width: 100%;
+            align-items: center;
+        }
+
+        .msg-button {
+            margin-bottom: 5px;
         }
 
 
-        .msg-input {
-            justify-content: flex-end;
-            width: 100%;
-            background-color: rgb(242, 242, 242);
-
-
-        }
-
-        /* ===== Scrollbar CSS ===== */
-        /* Firefox */
-        * {
-            scrollbar-width: auto;
-            scrollbar-color: #8f54a0 #ffffff;
-        }
-
-        /* Chrome, Edge, and Safari */
-        *::-webkit-scrollbar {
-            width: 16px;
-        }
-
-        *::-webkit-scrollbar-track {
-            background: #ffffff;
-        }
-
-        *::-webkit-scrollbar-thumb {
-            background-color: #8f54a0;
-            border-radius: 10px;
-            border: 3px solid #ffffff;
-        }
-
-        
     </style>
-    <div class="messageWrap">
-        <div class="message-box">
-            <ul class="messages">
-            </ul>
-        </div>
+    <div class="messageWrapdiv row">
+        <ul class="messages">
+        </ul>
+    </div>
+    <div class="row form-box">
         <form class="msg-form" action>
-            <input class="msg-input" autocomplete="off">
-            <button type="button" class="btn btn-secondary msg-button">Send</button>
+            <input class="msg-input col-md-11" autocomplete="off">
+            <button type="button col-md-1" class="btn btn-secondary btn-sm msg-button">Send</button>
         </form>
     </div>
 </template>

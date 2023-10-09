@@ -4,6 +4,7 @@ const text = await response.text();
 const html = new DOMParser().parseFromString(text, 'text/html');
 const template = html.querySelector('template');
 
+
 export class MessageWrap extends HTMLElement {
     constructor(messageArray, sendTo, blockList) {
         super();
@@ -26,6 +27,7 @@ export class MessageWrap extends HTMLElement {
             let uName = this.messageArray[i].split(":")[0];
             if(!this.blockList.includes(uName)){
             const item = document.createElement('li');
+            item.classList.add('messageli')
             item.textContent = this.messageArray[i];
             messages.appendChild(item);
 
@@ -42,8 +44,10 @@ export class MessageWrap extends HTMLElement {
             e.preventDefault();
             callback(msginput.value)
             msginput.value = "";
-            msginput.focus();
         })
+        msginput.focus();
+        
     }
+
 }
 customElements.define('messagewrap-module', MessageWrap);

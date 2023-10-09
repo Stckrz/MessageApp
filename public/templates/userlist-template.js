@@ -10,8 +10,9 @@ const html = new DOMParser().parseFromString(text, 'text/html');
 //here, we are selecting the template
 const template = html.querySelector('template');
 export class UserList extends HTMLElement {
-    constructor(userName) {
+    constructor(userName, currentUser) {
         super();
+        this.currentUser = currentUser;
         this.userName = userName;
         this.attachShadow({ mode: 'open' });
         //returns a promise..
@@ -25,24 +26,23 @@ export class UserList extends HTMLElement {
 
         //This selects the list item within the template, and then sets the textContent to the username passed in
         const a = template.content.querySelector(".user-list-item");
-        a.textContent = this.userName;
-                      
-        //appends the template content to the shadowRoot
+        const cont = template.content.querySelector(".user-list-item-cont")
+        a.textContent = this.userName;    
         
     }
-
-    //asynchronous function that takes a function, waits unttil the template is fetched, and then creates the button.
-    //Selects the button, and passes the handler passed in from main.js as an on-click event.
-    addDmButtonClickHandler(handler){
+    
+    
+    addDmButtonClickHandler(handler) {
         const dmButton = this.shadowRoot.querySelector(".dm-user")
         dmButton.addEventListener('click', handler)
-
     }
-    addBlockButtonClickHandler(handler){
+    addBlockButtonClickHandler(handler) {
         const blockButton = this.shadowRoot.querySelector(".block-user")
         blockButton.addEventListener('click', handler)
-
     }
-        
+
+
+
+
 }
 customElements.define('userlist-module', UserList);
