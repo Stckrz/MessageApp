@@ -11,6 +11,7 @@ const io = new Server(server);
 
 app.use(express.static('public'))
 app.use(express.static('public/templates'))
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 //when app recieves request, respond with html file
 app.get('/', (req, res) => {

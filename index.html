@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="style.css">
 
@@ -22,21 +23,33 @@
         <div class="startWrapper">
             <form class="username-form" action="">
                 <input class="username-input" autocomplete="off" />
-                <button class="username-button">Send</button>
+                <button type="button" class="btn btn-primary username-button">Send</button>
+                <!-- <button class="username-button">Send</button> -->
             </form>
 
         </div>
         <div class="main">
-            <div class="chat-list">
-                <!-- <div class="chat">room</div> -->
-            </div>
+            <ul class="nav nav-tabs chat-list">
+                <!-- <li class="nav-item"></li>
+                    <span class="nav-link active" aria-current="page" >Main</span>
+                    <li class="nav-item"></li>
+                    <a class="nav-link" aria-current="page" >Active</a> -->
+            
+            
+            </ul>
+            <!-- <div class="chat-list">
+
+            </div> -->
+
+            <div class="container">
+            <ul class="list-group user-list">
+            </ul>
             <div class="wrapper">
 
             </div>
-
-            <ul class="user-list">
-            </ul>
-
+        </div>
+            
+            
         </div>
     </div>
     </div>

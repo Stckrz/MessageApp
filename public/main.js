@@ -1,22 +1,26 @@
 import { UserList } from "./templates/userlist-template.js";
 import { MessageWrap } from "./templates/messagewrap-template.js";
 
+
 function ChatlistAdd(user) {
-    const newDm = document.createElement("div");
-    newDm.classList.add("chat");
-    newDm.classList.add(`${user}-chat`);
-    newDm.textContent = `${user}`;
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'x'
-    closeButton.classList.add("close-button");
-    newDm.appendChild(closeButton);
+    const newDm = document.createElement("li");
+    // newDm.classList.add("chat");
+    newDm.classList.add("nav-item");
+    const newSpan = document.createElement("span");
+    newSpan.classList.add("nav-link");
+    newSpan.classList.add(`${user}-chat`);
+    newSpan.textContent = `${user}`;
+    newDm.appendChild(newSpan);
+    // const closeButton = document.createElement('button');
+    // closeButton.textContent = 'x'
+    // closeButton.classList.add("close-button");
+    // newDm.appendChild(closeButton);
 
-    closeButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        newDm.remove();
-        openChats.splice(openChats.indexOf(user), 1);
-    });
-
+    // closeButton.addEventListener('click', (e) => {
+    //     e.stopPropagation();
+    //     newDm.remove();
+    //     openChats.splice(openChats.indexOf(user), 1);
+    // });
     return (newDm);
 }
 
@@ -25,6 +29,13 @@ function emptyParentElement(parentClass) {
     while (parentClass.firstChild) {
         parentClass.firstChild.remove()
     }
+}
+
+function setChatTabToActive(user){
+    let currentActive = document.querySelector('.active');
+    let newActive = document.querySelector(`.${user}-chat`)
+    currentActive.classList.remove("active");
+    newActive.classList.add("active")
 }
 
 const socket = io();
@@ -45,6 +56,8 @@ let currentUser = "";
 let roomElementList = [];
 
 
+
+
 main.style.visibility = 'hidden';
 
 usernameButton.addEventListener('click', (e) => {
@@ -57,14 +70,18 @@ usernameButton.addEventListener('click', (e) => {
         socket.emit('update user list', username);
         startWrapper.style.visibility = 'hidden';
         main.style.visibility = 'visible';
+
         const mainroom = ChatlistAdd("room");
         chatlist.appendChild(mainroom);
         openChats.push(username);
-
+        mainroom.firstChild.classList.add("active")
+    
         mainroom.addEventListener('click', () => {
             SelectedUser = 'room';
             console.log(`${SelectedUser} selected`)
-            mainroom.classList.remove('show')
+            mainroom.firstChild.classList.remove('show')
+            setChatTabToActive("room");
+
 
             socket.emit('select chat recipient', "room");
         });
@@ -84,8 +101,9 @@ socket.on('update chat log', (msgs, sender) => {
             socket.emit('select chat recipient', sender);
             SelectedUser = sender;
             console.log(`${SelectedUser} selected`)
+            setChatTabToActive(sender);
 
-            newRoom.classList.remove("show")
+            newRoom.firstChild.classList.remove("show")
         });
     }
 
@@ -99,7 +117,7 @@ socket.on('update chat log', (msgs, sender) => {
             }
         })
 
-        window.scrollTo(0, document.body.scrollHeight);
+        // window.scrollTo(0, document.body.scrollHeight);
     } else {
         let a = document.querySelector(`.${sender}-chat`);
         a.classList.add("show")
@@ -135,6 +153,7 @@ socket.on('update user list', (userarr) => {
                     if (openChats.includes(userArray[i])) {
                         SelectedUser = userArray[i];
                         console.log(`${SelectedUser} selected`)
+                        setChatTabToActive(userArray[i]);
                         socket.emit('select chat recipient', userArray[i])
                     } else {
 
@@ -146,10 +165,12 @@ socket.on('update user list', (userarr) => {
                             socket.emit('chat message', ``, userArray[i])
                             socket.emit('select chat recipient', userArray[i])
                             SelectedUser = userArray[i];
+                            setChatTabToActive(userArray[i]);
                             console.log(`${SelectedUser} selected`)
 
                             roomlist.addEventListener('click', () => {
                                 SelectedUser = userArray[i];
+                                setChatTabToActive(userArray[i]);
                                 console.log(`${SelectedUser} selected`)
                                 socket.emit('select chat recipient', userArray[i])
                                 roomlist.classList.remove("show")

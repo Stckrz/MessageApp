@@ -1,28 +1,31 @@
+
 <template id="messagerender">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <style>
         .messageWrap {
-            display: flex;
+            /* display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-between; */
+            /* height: 100%;*/
+            width: 1000px; 
             height: 100%;
-            box-shadow: 5px 5px 50px;
-            border-radius: 1em;
+            /* border-radius: 1em; */
         }
 
         .message-box {
-            display: flex;
+            /* display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 20px;
-            overflow-y: scroll;
+            overflow-y: scroll; */
+            height: 80vh;
 
 
 
         }
+        
 
         .messages {
-
-
             list-style: none;
         }
 
@@ -31,33 +34,18 @@
         }
 
         .msg-form {
-            /* background-color: rgb(214, 214, 214); */
             display: flex;
             padding: 10px;
-            /* height: 5%; */
-            /* box-shadow: -2px -2px 5px rgb(61, 61, 61); */
-        }
-
-        .msg-button {
-            border: none;
-            background: none;
-            /* box-shadow: 2px 2px 5px rgb(61, 61, 61); */
-            box-shadow: 2px 2px 5px;
-        }
-
-        .msg-button:hover {
-            box-shadow: 4px 4px 10px;
-
+            width: 100%;
         }
 
 
         .msg-input {
             justify-content: flex-end;
-            width: 98%;
-            height: 2em;
-            border: none;
-            background: none;
-            box-shadow: inset 2px 2px 5px;
+            width: 100%;
+            background-color: rgb(242, 242, 242);
+
+
         }
 
         /* ===== Scrollbar CSS ===== */
@@ -91,7 +79,7 @@
         </div>
         <form class="msg-form" action>
             <input class="msg-input" autocomplete="off">
-            <button class="msg-button">Send</button>
+            <button type="button" class="btn btn-secondary msg-button">Send</button>
         </form>
     </div>
 </template>

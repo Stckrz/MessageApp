@@ -1,15 +1,14 @@
 <template id="userlist">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <style>
-        .user-list-item-cont {
+         .user-list-item-cont {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            /* padding-top: 5px; */
             list-style: none;
             width: 80%;
-            height: 1em;
-            padding-left: 5px;
+            padding: 5px;
             border: 1px solid;
             border-radius: 5px;
             box-shadow: 3px 3px 3px;
@@ -17,7 +16,9 @@
 
 
         }
-        .user-list-item-cont:hover{
+
+        /*
+        .user-list-item-cont:hover {
             margin-left: 2px;
             box-shadow: 5px 5px 5px;
         }
@@ -28,30 +29,35 @@
 
         .user-list-item {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
 
         }
-
+        .block-user,
         .dm-user {
-            border: 1px solid;
-            background: none;
-            box-shadow: 2px 2px 2px;
-            background: linear-gradient(blue, #0000);
-            background-color: blue;
-            transition: background-color 0.5s, box-shadow 0.5s;
 
+            box-shadow: 2px 2px 2px;
+            transition: background-color 0.5s, box-shadow 0.5s;
+            
         }
+
 
         .dm-user:hover {
             background-color: purple;
-            box-shadow:4px 4px 4px;
+            box-shadow: 4px 4px 4px;
         }
+        .block-user:hover {
+            background-color: purple;
+            box-shadow: 4px 4px 4px;
+        } */
     </style>
-    <div class="user-list-item-cont">
+    
+    <div class="list-group-item container user-list-item-cont">
         <li class="user-list-item"></li>
-        <button class="dm-user">DM</button>
-        <button class="block-user">block</button>
+        <div class="button-container">
+            <button class="dm-user">DM</button>
+            <button class="block-user">block</button>
+        </div>
     </div>
 
 </template>
